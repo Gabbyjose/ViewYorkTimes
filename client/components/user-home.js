@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import {connect} from 'react-redux'
 import {fetchArticles} from '../store'
 
@@ -13,7 +13,12 @@ export const UserHome = (props) => {
   return (
     <div>
       <h3>Welcome! </h3>
-
+      {articles.length && articles.map(el => (
+          <div>
+            <h3>{el.section}</h3>
+            <p>{el.title}</p>
+          </div>
+          ))}
     </div>
   )
 }
