@@ -1,34 +1,43 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {fetchArticles} from '../store'
 
 /**
  * COMPONENT
  */
 export const UserHome = (props) => {
-  const {email} = props
+  const articles = props.articles || []
+  console.log('Our articles in component',articles)
 
   return (
     <div>
-      <h3>Welcome, {email}</h3>
+      <h3>Welcome! </h3>
+
     </div>
   )
 }
 
-/**
- * CONTAINER
- */
 const mapState = (state) => {
   return {
-    email: state.user.email
+    articles: state.articles.results
   }
 }
 
-export default connect(mapState)(UserHome)
-
-/**
- * PROP TYPES
- */
-UserHome.propTypes = {
-  email: PropTypes.string
+const mapDispatch = (dispatch) => {
+  return {
+    getArticles () {
+      dispatch(fetchArticles())
+    }
+  }
 }
+
+export default connect(mapState, mapDispatch)(UserHome)
+
+
+// {articles.length && articles.results.map(el => (
+//   <div>
+//     <h3>{el.section}</h3>
+//     <p>{el.title}</p>
+//   </div>
+//   ))}
