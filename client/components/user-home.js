@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
-import {connect} from 'react-redux'
-import {fetchArticles, filterData} from '../store'
+import { connect } from 'react-redux'
+import { fetchArticles, filterData } from '../store'
 
 /**
  * COMPONENT
@@ -14,7 +14,10 @@ export class UserHome extends Component {
   }
 
   componentWillMount() {
-    this.props.filterArticlesByCountry(this.props.articles)
+    this.props.loadInitialData()
+      .then(articles => {
+        this.props.filterArticlesByCountry(articles.results)
+      })
   }
 
   render() {
@@ -24,12 +27,12 @@ export class UserHome extends Component {
     return (
       <div>
         <h3>Welcome! </h3>
-        {this.props.articles.length && this.props.articles.map(el => (
-            <div key={this.props.articles.indexOf(el)}>
-              <h3>{el.section}</h3>
-              <p>{el.title}</p>
-            </div>
-            ))}
+        {this.props.articles && this.props.articles.length && this.props.articles.map(el => (
+          <div key={this.props.articles.indexOf(el)}>
+            <h3>{el.section}</h3>
+            <p>{el.title}</p>
+          </div>
+        ))}
       </div>
     )
   }
@@ -44,8 +47,11 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    filterArticlesByCountry (obj) {
-      dispatch(filterData(obj))
+    loadInitialData() {
+      return dispatch(fetchArticles())
+    },
+    filterArticlesByCountry(obj) {
+      return dispatch(filterData(obj))
     }
   }
 }

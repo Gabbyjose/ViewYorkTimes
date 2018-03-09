@@ -17,7 +17,7 @@ export class OurMap extends Component {
   render() {
 
     console.log(this.props)
-
+    if (!this.props.countryTable) return
     Highcharts.mapChart('mapid', {
       plotOptions: {
         color: 'red'
