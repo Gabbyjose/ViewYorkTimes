@@ -1,19 +1,23 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {withRouter, Route, Switch} from 'react-router-dom'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { withRouter, Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { OurMap, UserHome} from './components'
-import {fetchArticles} from './store'
+import { OurMap, UserHome } from './components'
+import { fetchArticles, filterData } from './store'
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
-  componentDidMount () {
+  componentWillMount() {
     this.props.loadInitialData()
+      .then(articles => {
+        console.log('THESE ARE THE ARTICLEZ', articles)
+        this.props.filterArticlesByCountry(articles.articles.results)
+      })
   }
 
-  render () {
+  render() {
 
     return (
       <Switch>
@@ -36,9 +40,12 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    loadInitialData () {
-      dispatch(fetchArticles())
+    loadInitialData() {
+      return dispatch(fetchArticles())
     },
+    filterArticlesByCountry(obj) {
+      return dispatch(filterData(obj))
+    }
   }
 }
 

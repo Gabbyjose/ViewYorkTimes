@@ -269,7 +269,7 @@ export const getCountryCode = (name) => {
     let country = name;
     let countryCode;
     if (!isoCountries[name]) {
-        country = allCountries.find(el => key.includes(el))
+        country = allCountries.find(el => name.includes(el))
         //still defaulting to the US if we cant find a country name, need to figure that out (the US objects are still overwriting each other too)
         countryCode = isoCountries[country] || 'US'
     } else {

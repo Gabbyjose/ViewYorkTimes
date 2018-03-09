@@ -11,6 +11,7 @@ const filterArticles = countryTable => ({
 
 export const filterData = articles =>
   dispatch => {
+    console.log('articles are hereeeeee', articles)
     const hashTable = {};
     if (!articles) return
     if (!articles.length) return
