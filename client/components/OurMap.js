@@ -1,58 +1,81 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux'
 // Load Highcharts
-const Highcharts = require('highcharts');
+// const Highcharts = require('highcharts');
 
 // Load a module
-require('highcharts/modules/map')(Highcharts);
-
+// require('highcharts/modules/map')(Highcharts);
+// const maps = require('../../server/world-palestine-highres.geo.json');
+//const Highlight = require('react-highlight');
 export class OurMap extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       map: true,
     }
   }
-
   render() {
+
+    console.log(this.props)
+
+    Highcharts.mapChart('mapid', {
+      title: {
+        text: 'Map border options'
+      },
+
+      mapNavigation: {
+        enabled: true,
+        buttonOptions: {
+          verticalAlign: 'bottom'
+        }
+      },
+
+      colorAxis: {
+        min: 1,
+        max: 1000,
+        type: 'logarithmic'
+      },
+
+      series: [{
+        data: this.props.countryTable,
+        mapData: Highcharts.maps['custom/world'],
+        joinBy: ['iso-a2', 'code'],
+        name: 'Population density',
+        borderColor: 'black',
+        borderWidth: 0.2,
+        states: {
+          hover: {
+            borderWidth: 1
+          }
+        },
+        tooltip: {
+          valueSuffix: '/km²'
+        }
+      }]
+    });
+
     return (
-      <h1>Hello World</h1>
+      <div >
+        <h1> Hello World </h1>
+      </div>
     )
   }
 
 }
 
 
+const mapState = (state) => {
+  return {
+    articles: state.articles.results,
+    countryTable: state.countryTable
+  }
+}
 
+const mapDispatch = (dispatch) => {
+  return {
+    // filterArticlesByCountry (obj) {
+    //   dispatch(filterData(obj))
+  }
+}
 
-//lololol react
-// import React, { Component } from 'react'
-// import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
-
-// export default class OurMap extends Component {
-//   state = {
-//     lng: -74.0060,
-//     lat: 40.7128,
-//     zoom: 5,
-//   }
-
-//   render() {
-//     const position = [this.state.lat, this.state.lng]
-//     return (
-//       <Map center={position} zoom={this.state.zoom} id="mapid">
-//         <TileLayer
-//           attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-//           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-//         />
-//         <Marker position={position}>
-//           <Popup>
-//             <span>
-//               A pretty CSS3 popup. <br /> Easily customizable.
-//             </span>
-//           </Popup>
-//         </Marker>
-//       </Map>
-//     )
-//   }
-// }
-
-module.exports = OurMap;
+export default connect(mapState, mapDispatch)(OurMap)
