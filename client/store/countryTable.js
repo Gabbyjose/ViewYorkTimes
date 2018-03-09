@@ -5,6 +5,22 @@ const filterArticles = countryTable => ({
   countryTable
 })
 
+const allCountries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas"
+,"Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands"
+,"Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica"
+,"Cote D Ivoire","Croatia","Cruise Ship","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea"
+,"Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana"
+,"Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India"
+,"Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kuwait","Kyrgyz Republic","Laos","Latvia"
+,"Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania"
+,"Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Namibia","Nepal","Netherlands","Netherlands Antilles","New Caledonia"
+,"New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal"
+,"Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre &amp; Miquelon","Samoa","San Marino","Satellite","Saudi Arabia","Senegal","Serbia","Seychelles"
+,"Sierra Leone","Singapore","Slovakia","Slovenia","South Africa","South Korea","Spain","Sri Lanka","St Kitts &amp; Nevis","St Lucia","St Vincent","St. Lucia","Sudan"
+,"Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad &amp; Tobago","Tunisia"
+,"Turkey","Turkmenistan","Turks &amp; Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","United States Minor Outlying Islands","Uruguay","Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)"
+,"Yemen","Zambia","Zimbabwe"];
+
 const isoCountries = {
   'Afghanistan': 'AF',
   'Aland Islands': 'AX',
@@ -263,10 +279,12 @@ export const filterData = articles =>
     for (let i = 0; i < articles.length; i++) {
 
       for (let j = 0; j < articles[i].geo_facet.length; j++) {
+        //instead of adding a number for each time a country appears, i added an array that keeps the title of the section they appear in, then to get the number of times a country appears, we just get the length of the array
+
         if (hashTable.hasOwnProperty(articles[i].geo_facet[j])) {
-          hashTable[articles[i].geo_facet[j]]++;
+          hashTable[articles[i].geo_facet[j]].push(articles[i].section)
         } else {
-          hashTable[articles[i].geo_facet[j]] = 1;
+          hashTable[articles[i].geo_facet[j]] = [articles[i].section];
         }
       }
     }
@@ -274,20 +292,26 @@ export const filterData = articles =>
 
     for (var key in hashTable) {
       if (hashTable.hasOwnProperty(key)) {
-        let countryCode;
-        if (isoCountries[key]) {
-          countryCode = isoCountries[key]
-        } else {
-          countryCode = 'US'
+        let countryCode, countryName;
+        //if the country name isn't in isoCountries, try looping through the allCountries array and see if it matches on any of those, then find the country code
+        if(!isoCountries[key]){
+          countryName = allCountries.find(el => key.includes(el))
+          //still defaulting to the US if we cant find a country name, need to figure that out (the US objects are still overwriting each other too)
+          countryCode = isoCountries[countryName] || 'US'
         }
+        else {
+          countryCode = isoCountries[key];
+          countryName = key;
+        }
+
         data.push({
           code: countryCode,
-          value: hashTable[key],
+          value: hashTable[key].length,
+          sections: hashTable[key],
           name: key
         })
       }
     }
-    console.log('THIS THE DATA IN THE STORE, ', data)
     dispatch(filterArticles(data))
   }
 

@@ -36,9 +36,10 @@ export class OurMap extends Component {
         type: 'linear'
       },
 
+      //the formatter function is how to get info off of the data point, play around with it!
       tooltip: {
         formatter: function() {
-          return 'The point name is ' + this.point.name + ' and the series name is  ' + this.series.name;
+          return 'The point name is ' + this.point.name + ' and the sections it appeared in are:  ' + this.point.sections;
         }
       },
 
