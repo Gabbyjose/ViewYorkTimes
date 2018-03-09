@@ -17,8 +17,11 @@ export class OurMap extends Component {
   render() {
 
     console.log(this.props)
-
+    if (!this.props.countryTable) return
     Highcharts.mapChart('mapid', {
+      plotOptions: {
+        color: 'red'
+      },
       title: {
         text: 'View Your Times'
       },
@@ -32,18 +35,19 @@ export class OurMap extends Component {
 
       colorAxis: {
         min: 1,
-        max: 40,
+        max: 15,
         type: 'linear'
       },
 
       //the formatter function is how to get info off of the data point, play around with it!
       tooltip: {
-        formatter: function() {
+        formatter: function () {
           return 'The point name is ' + this.point.name + ' and the sections it appeared in are:  ' + this.point.sections;
         }
       },
 
       series: [{
+
         data: this.props.countryTable,
         mapData: Highcharts.maps['custom/world'],
         joinBy: ['iso-a2', 'code'],
@@ -52,9 +56,10 @@ export class OurMap extends Component {
         borderWidth: 0.2,
         states: {
           hover: {
-            borderWidth: 1
+            borderWidth: 1,
+            color: 'red'
           }
-        }
+        },
       }]
     })
 
