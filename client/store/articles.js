@@ -13,7 +13,7 @@ const getArticles = articles => ({type: GET_ARTICLES, articles})
 
 export const fetchArticles = () =>
   dispatch =>
-    axios.get('/api/')
+    axios.get('/api/topstories')
       .then(body => dispatch(getArticles(body.data)))
       .catch(err => console.log(err))
 

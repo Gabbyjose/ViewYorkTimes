@@ -1,38 +1,54 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 import {connect} from 'react-redux'
-import {fetchArticles} from '../store'
+import {fetchArticles, filterData} from '../store'
 
 /**
  * COMPONENT
  */
-export const UserHome = (props) => {
-  const articles = props.articles || []
-  console.log('Our articles in component',articles)
+export class UserHome extends Component {
+  constructor(props) {
+    super(props);
+    console.log(props)
 
-  return (
-    <div>
-      <h3>Welcome! </h3>
-      {articles.length && articles.map(el => (
-          <div>
-            <h3>{el.section}</h3>
-            <p>{el.title}</p>
-          </div>
-          ))}
-    </div>
-  )
+  }
+
+  componentWillMount() {
+    this.props.filterArticlesByCountry(this.props.articles)
+  }
+
+  render() {
+    // const articles = props.articles || []
+    console.log('Our articles in component', this.props.articles, 'and our table', this.props.countryTable)
+
+    // console.log('is my country table',props.countryTable)
+
+    return (
+      <div>
+        <h3>Welcome! </h3>
+        {this.props.articles.length && this.props.articles.map(el => (
+            <div key={this.props.articles.indexOf(el)}>
+              <h3>{el.section}</h3>
+              <p>{el.title}</p>
+            </div>
+            ))}
+      </div>
+    )
+  }
 }
 
 const mapState = (state) => {
+  console.log('my articles', state.articles.results)
   return {
-    articles: state.articles.results
+    articles: state.articles.results,
+    countryTable: state.countryTable
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    getArticles () {
-      dispatch(fetchArticles())
+    filterArticlesByCountry (obj) {
+      dispatch(filterData(obj))
     }
   }
 }
