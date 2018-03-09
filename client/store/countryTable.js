@@ -9,7 +9,6 @@ const filterArticles = countryTable => ({
 
 export const filterData = articles =>
 dispatch => {
-  console.log('test', articles);
   const hashTable = {};
   for (let i = 0; i < articles.length; i++){
     for (let j = 0; j < articles[i].geo_facet.length; j++){
