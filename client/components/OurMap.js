@@ -20,7 +20,7 @@ export class OurMap extends Component {
 
     Highcharts.mapChart('mapid', {
       title: {
-        text: 'Map border options'
+        text: 'View Your Times'
       },
 
       mapNavigation: {
@@ -32,27 +32,31 @@ export class OurMap extends Component {
 
       colorAxis: {
         min: 1,
-        max: 1000,
-        type: 'logarithmic'
+        max: 40,
+        type: 'linear'
+      },
+
+      tooltip: {
+        formatter: function() {
+          return 'The point name is ' + this.point.name + ' and the series name is  ' + this.series.name;
+        }
       },
 
       series: [{
         data: this.props.countryTable,
         mapData: Highcharts.maps['custom/world'],
         joinBy: ['iso-a2', 'code'],
-        name: 'Population density',
+        name: 'New York Times Mentions',
         borderColor: 'black',
         borderWidth: 0.2,
         states: {
           hover: {
             borderWidth: 1
           }
-        },
-        tooltip: {
-          valueSuffix: '/km²'
         }
       }]
-    });
+    })
+
 
     return (
       <div >

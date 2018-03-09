@@ -18,10 +18,8 @@ export class UserHome extends Component {
   }
 
   render() {
-    // const articles = props.articles || []
-    console.log('Our articles in component', this.props.articles, 'and our table', this.props.countryTable)
 
-    // console.log('is my country table',props.countryTable)
+    console.log('Our articles in component', this.props.articles, 'and our table', this.props.countryTable)
 
     return (
       <div>
@@ -38,7 +36,6 @@ export class UserHome extends Component {
 }
 
 const mapState = (state) => {
-  console.log('my articles', state.articles.results)
   return {
     articles: state.articles.results,
     countryTable: state.countryTable
@@ -54,11 +51,3 @@ const mapDispatch = (dispatch) => {
 }
 
 export default connect(mapState, mapDispatch)(UserHome)
-
-
-// {articles.length && articles.results.map(el => (
-//   <div>
-//     <h3>{el.section}</h3>
-//     <p>{el.title}</p>
-//   </div>
-//   ))}
