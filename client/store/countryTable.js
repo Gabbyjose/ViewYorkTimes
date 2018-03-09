@@ -263,20 +263,32 @@ export const filterData = articles =>
     for (let i = 0; i < articles.length; i++) {
 
       for (let j = 0; j < articles[i].geo_facet.length; j++) {
-        let countryCode;
-        if (isoCountries[articles[i].geo_facet[j]]) {
-          countryCode = isoCountries[articles[i].geo_facet[j]].toLowerCase()
+        if (hashTable.hasOwnProperty(articles[i].geo_facet[j])) {
+          hashTable[articles[i].geo_facet[j]]++;
         } else {
-          countryCode = articles[i].geo_facet[j]
-        }
-        if (hashTable.hasOwnProperty(countryCode)) {
-          hashTable[countryCode]++;
-        } else {
-          hashTable[countryCode] = 1;
+          hashTable[articles[i].geo_facet[j]] = 1;
         }
       }
     }
-    dispatch(filterArticles(hashTable))
+    let data = []
+
+    for (var key in hashTable) {
+      if (hashTable.hasOwnProperty(key)) {
+        let countryCode;
+        if (isoCountries[key]) {
+          countryCode = isoCountries[key]
+        } else {
+          countryCode = 'US'
+        }
+        data.push({
+          code: countryCode,
+          value: hashTable[key],
+          name: key
+        })
+      }
+    }
+    console.log('THIS THE DATA IN THE STORE, ', data)
+    dispatch(filterArticles(data))
   }
 
 
