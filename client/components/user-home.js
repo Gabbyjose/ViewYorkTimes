@@ -9,7 +9,7 @@ import { fetchArticles, filterData } from '../store'
 export class UserHome extends Component {
   constructor(props) {
     super(props);
-    console.log(props)
+    this.renderMap = this.renderMap.bind(this)
 
   }
 
@@ -18,21 +18,76 @@ export class UserHome extends Component {
       .then(articles => {
         this.props.filterArticlesByCountry(articles.results)
       })
+      .then(() => this.renderMap())
+  }
+
+  renderMap(){
+    if (!this.props.countryTable) return
+    Highcharts.mapChart('mapid', {
+      plotOptions: {
+        color: 'red'
+      },
+      title: {
+        text: 'View Your Times'
+      },
+
+      mapNavigation: {
+        enabled: true,
+        buttonOptions: {
+          verticalAlign: 'bottom'
+        }
+      },
+
+      colorAxis: {
+        min: 1,
+        max: 15,
+        type: 'linear'
+      },
+
+      //the formatter function is how to get info off of the data point, play around with it!
+      tooltip: {
+        formatter: function () {
+          return '<b>' + this.point.name + '</b><br>' + this.point.sections;
+        }
+      },
+
+      series: [{
+
+        data: this.props.countryTable,
+        mapData: Highcharts.maps['custom/world'],
+        joinBy: ['iso-a2', 'code'],
+        name: '<b>New York Times Mentions</b>',
+        borderColor: 'black',
+        borderWidth: 0.2,
+        states: {
+          hover: {
+            borderWidth: 1,
+            color: 'red'
+          }
+        },
+      }]
+    })
+
+    return (
+      <div>
+        <h1> View Your Times </h1>
+      </div>
+    )
   }
 
   render() {
 
-    console.log('Our articles in component', this.props.articles, 'and our table', this.props.countryTable)
-
     return (
       <div>
         <h3>Welcome! </h3>
-        {this.props.articles && this.props.articles.length && this.props.articles.map(el => (
-          <div key={this.props.articles.indexOf(el)}>
-            <h3>{el.section}</h3>
-            <p>{el.title}</p>
-          </div>
-        ))}
+        {
+        //   this.props.articles && this.props.articles.length && this.props.articles.map(el => (
+        //   <div key={this.props.articles.indexOf(el)}>
+        //     <h3>{el.section}</h3>
+        //     <p>{el.title}</p>
+        //   </div>
+        // ))
+      }
       </div>
     )
   }

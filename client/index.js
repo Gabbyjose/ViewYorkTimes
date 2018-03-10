@@ -6,9 +6,6 @@ import store from './store'
 import App from './app'
 const ReactDOM = require('react-dom');
 
-// establishes socket connection
-import './socket'
-
 
 ReactDOM.render(
   <Provider store={store}>
