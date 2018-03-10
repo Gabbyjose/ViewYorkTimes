@@ -21,7 +21,7 @@ class Routes extends Component {
 
     return (
       <Switch>
-        <Route path="/map" component={OurMap} />
+
         <Route path="/home" component={UserHome} />
 
       </Switch>

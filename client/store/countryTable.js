@@ -11,19 +11,18 @@ const filterArticles = countryTable => ({
 
 export const filterData = articles =>
   dispatch => {
-    console.log('articles are hereeeeee', articles)
     const hashTable = {};
     if (!articles) return
     if (!articles.length) return
+    //let data = [];
     for (let i = 0; i < articles.length; i++) {
-
       for (let j = 0; j < articles[i].geo_facet.length; j++) {
-        //instead of adding a number for each time a country appears, i added an array that keeps the title of the section they appear in, then to get the number of times a country appears, we just get the length of the array
+        let country = getCountryCode(articles[i].geo_facet[j])
 
-        if (hashTable.hasOwnProperty(articles[i].geo_facet[j])) {
-          hashTable[articles[i].geo_facet[j]].push(articles[i].section)
+        if (hashTable.hasOwnProperty(country.name)) {
+          hashTable[country.name].push('<br>'+articles[i].section)
         } else {
-          hashTable[articles[i].geo_facet[j]] = [articles[i].section];
+          hashTable[country.name] = [articles[i].section];
         }
       }
     }
@@ -37,6 +36,7 @@ export const filterData = articles =>
         data.push(currentCountry)
       }
     }
+    console.log('OUR DATA:', data)
     dispatch(filterArticles(data))
   }
 
