@@ -1,4 +1,4 @@
-import { getCountryCode } from "./helperFuncs";
+import { getCountryCode } from './helperFuncs';
 
 const FILTER_ARTICLES = 'FILTER_ARTICLES';
 
@@ -14,15 +14,18 @@ export const filterData = articles =>
     const hashTable = {};
     if (!articles) return
     if (!articles.length) return
-    //let data = [];
     for (let i = 0; i < articles.length; i++) {
       for (let j = 0; j < articles[i].geo_facet.length; j++) {
         let country = getCountryCode(articles[i].geo_facet[j])
-
+        let imageUrl ='https://media.giphy.com/media/H54R9ULqkR5bG/giphy.gif'
+        if (articles[i].multimedia[2]){
+          imageUrl = articles[i].multimedia[2].url
+        }
         if (hashTable.hasOwnProperty(country.name)) {
-          hashTable[country.name].push('<br>'+articles[i].section)
+
+          hashTable[country.name].push({name: articles[i].title, link: articles[i].url, imageUrl: imageUrl})
         } else {
-          hashTable[country.name] = [articles[i].section];
+          hashTable[country.name] = [{name: articles[i].title, link: articles[i].url, imageUrl: imageUrl}];
         }
       }
     }
@@ -36,7 +39,6 @@ export const filterData = articles =>
         data.push(currentCountry)
       }
     }
-    console.log('OUR DATA:', data)
     dispatch(filterArticles(data))
   }
 

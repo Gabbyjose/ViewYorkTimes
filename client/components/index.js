@@ -5,4 +5,4 @@
  */
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
-export {default as OurMap} from './OurMap'
+export {default as SingleCountry} from './SingleCountry'

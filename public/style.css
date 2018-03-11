@@ -1,18 +1,24 @@
 body {
-  font-family: 'Roboto Mono', monospace, sans-serif;
+  font-family: 'Open Sans', monospace, sans-serif;
 
 
 }
 
 h1 {
+  font-family: 'Arbutus Slab', serif;
   font-weight: bold;
   text-align: center;
-  font-size: 42px;
+  font-size: 60px;
+}
+
+h1:hover {
+  color:#99bfaa;
 }
 
 a {
-  font-family: 'Roboto Mono', monospace, sans-serif;
+  font-family: 'Open Sans', monospace, sans-serif;
   text-decoration: none;
+  color: #000;
 
 }
 
@@ -37,4 +43,15 @@ form div {
 #mapid {
   height: 700px;
   margin: 5em
+}
+
+tspan {
+  text-decoration: underline;
+}
+
+.singleCountry {
+  display: block;
+  margin: auto;
+  padding: 15px;
+  text-align: center;
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { OurMap, UserHome } from './components'
+import { SingleCountry, UserHome } from './components'
 import { fetchArticles, filterData } from './store'
 
 /**
@@ -23,6 +23,7 @@ class Routes extends Component {
       <Switch>
 
         <Route path="/home" component={UserHome} />
+        <Route path="/:country" component={SingleCountry} />
 
       </Switch>
     )
