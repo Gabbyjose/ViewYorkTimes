@@ -14,12 +14,12 @@ export const filterData = articles =>
     const hashTable = {};
     if (!articles) return
     if (!articles.length) return
-    //let data = [];
     for (let i = 0; i < articles.length; i++) {
       for (let j = 0; j < articles[i].geo_facet.length; j++) {
         let country = getCountryCode(articles[i].geo_facet[j])
 
         if (hashTable.hasOwnProperty(country.name)) {
+          //maybe see if there's a way to not repeat article sections, so if it already appears in this array we do something else? also might consider where we can store article titles/links if we want to render them on a separate page
           hashTable[country.name].push('<br>'+articles[i].section)
         } else {
           hashTable[country.name] = [articles[i].section];
@@ -36,7 +36,6 @@ export const filterData = articles =>
         data.push(currentCountry)
       }
     }
-    console.log('OUR DATA:', data)
     dispatch(filterArticles(data))
   }
 
