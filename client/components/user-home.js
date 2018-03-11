@@ -51,7 +51,9 @@ export class UserHome extends Component {
         },
         backgroundColor: '#99bfaa',
       },
-
+      // working on getting this to show something on click. hopefully
+      // list out all the articles that it's appeared in
+      // can we link them together??
       plotOptions: {
         series: {
           events: {
