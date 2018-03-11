@@ -21,14 +21,11 @@ export class UserHome extends Component {
       .then(() => this.renderMap())
   }
 
-  renderMap(){
+  renderMap() {
     if (!this.props.countryTable) return
     Highcharts.mapChart('mapid', {
-      plotOptions: {
-        color: 'red'
-      },
       title: {
-        text: 'View Your Times'
+        text: ''
       },
 
       mapNavigation: {
@@ -39,15 +36,41 @@ export class UserHome extends Component {
       },
 
       colorAxis: {
+        color: 'red',
         min: 1,
-        max: 15,
+        max: 10,
         type: 'linear'
       },
 
       //the formatter function is how to get info off of the data point, play around with it!
       tooltip: {
         formatter: function () {
-          return '<b>' + this.point.name + '</b><br>' + this.point.sections;
+          // just prints the number of articles that country appears in.
+          // then we can use the click to list out the articles with da links
+          return '<b>' + this.point.name + '</b><br>' + '<b>Articles:</b>' + this.point.sections.length;
+        },
+        backgroundColor: '#99bfaa',
+      },
+
+      plotOptions: {
+        series: {
+          events: {
+            click: (el) => {
+              console.log(el.point.sections)
+              const text = 'this prints a thing!'
+              if (!this.mapChart.clickLabel) {
+                this.mapChart.clickLabel = this.mapChart.renderer.label(text, 0, 250)
+                  .css({
+                    width: '180px'
+                  })
+                  .add();
+              } else {
+                this.mapChart.clickLabel.attr({
+                  text: text
+                });
+              }
+            }
+          }
         }
       },
 
@@ -57,12 +80,12 @@ export class UserHome extends Component {
         mapData: Highcharts.maps['custom/world'],
         joinBy: ['iso-a2', 'code'],
         name: '<b>New York Times Mentions</b>',
-        borderColor: 'black',
+        borderColor: '#000',
         borderWidth: 0.2,
         states: {
           hover: {
             borderWidth: 1,
-            color: 'red'
+            color: '#6288a5'
           }
         },
       }]
@@ -79,15 +102,15 @@ export class UserHome extends Component {
 
     return (
       <div>
-        <h3>Welcome! </h3>
+        <p> Your easiest way to see where the biggest news is happening everyday around the world </p>
         {
-        //   this.props.articles && this.props.articles.length && this.props.articles.map(el => (
-        //   <div key={this.props.articles.indexOf(el)}>
-        //     <h3>{el.section}</h3>
-        //     <p>{el.title}</p>
-        //   </div>
-        // ))
-      }
+          //   this.props.articles && this.props.articles.length && this.props.articles.map(el => (
+          //   <div key={this.props.articles.indexOf(el)}>
+          //     <h3>{el.section}</h3>
+          //     <p>{el.title}</p>
+          //   </div>
+          // ))
+        }
       </div>
     )
   }
