@@ -12,7 +12,6 @@ class Routes extends Component {
   componentWillMount() {
     this.props.loadInitialData()
       .then(articles => {
-        console.log('THESE ARE THE ARTICLEZ', articles)
         this.props.filterArticlesByCountry(articles.articles.results)
       })
   }
@@ -22,6 +21,7 @@ class Routes extends Component {
     return (
       <Switch>
 
+        <Route exact path="/" component={UserHome} />
         <Route path="/home" component={UserHome} />
         <Route path="/:country" component={SingleCountry} />
 
