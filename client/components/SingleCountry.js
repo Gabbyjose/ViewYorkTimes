@@ -1,36 +1,31 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 
-export class SingleCountry extends Component {
-  constructor(props) {
-    super(props);
-
-  }
-  render() {
+const SingleCountry = props => {
     return (
-      this.props.name ?
+      props.name ?
       <div className="singleCountry">
-        <h2> Da News 4: {this.props.name}</h2>
+        <h2> The News Today In: {props.name}</h2>
         <div>
-
           {
-            this.props.singleCountryData && this.props.singleCountryData.map(country =>
-              <div key={country.link}>
-              <img src={country.imageUrl}/>
-              <br />
-              <a href={country.link}>{country.name}</a>
-              <br />
-              </div>
+            props.singleCountryData && props.singleCountryData.map(country =>
+              (<div key={country.link} className="singleArticle">
+
+                <a href={country.link}><h3>{country.name}</h3>
+
+                <img src={country.imageUrl} />
+                </a>
+                <br />
+              </div>)
           )}
 
         </div>
       </div>
       :
-        <h2>Check back tmrw for news on this country!</h2>
+        <h2>Check back tomorrow for news on this country!</h2>
 
     )
-  }
+
 }
 
 const mapState = (state, ownProps) => {

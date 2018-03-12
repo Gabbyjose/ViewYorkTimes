@@ -55,18 +55,6 @@ export class UserHome extends Component {
           point: {
             events: {
               click: function(el) {
-                // const text = el.point.sections;
-                // if (!this.series.chart.clickLabel) {
-                //   this.series.chart.clickLabel = this.series.chart.renderer.label(text, 0, 400)
-                //     .css({
-                //       width: '500px'
-                //     })
-                //     .add();
-                // } else {
-                //   this.series.chart.clickLabel.attr({
-                //     text: text
-                //   });
-                // }
                 location.href = `/${el.point.code}`
               }
             }
@@ -102,8 +90,8 @@ export class UserHome extends Component {
 
     return (
       <div>
-        <p> Your easiest way to see where the biggest news is happening everyday around the world </p>
-
+        <p className="description"> The easiest way to see where the biggest news is happening everyday around the world. Hover over a country to see how many articles are appearing in the top stories today. Click on the country to see the articles from the New York Times. </p>
+        <div id="mapid"></div>
       </div>
     )
   }
