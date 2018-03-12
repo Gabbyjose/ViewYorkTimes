@@ -42,34 +42,20 @@ export class UserHome extends Component {
         type: 'linear'
       },
 
-      //the formatter function is how to get info off of the data point, play around with it!
       tooltip: {
         formatter: function () {
-          // just prints the number of articles that country appears in.
-          // then we can use the click to list out the articles with da links
+
           return '<b>' + this.point.name + '</b><br>' + '<b>Articles:</b>' + this.point.sections.length;
         },
         backgroundColor: '#99bfaa',
       },
-      // working on getting this to show something on click. hopefully
-      // list out all the articles that it's appeared in
-      // can we link them together??
+
       plotOptions: {
         series: {
-          events: {
-            click: (el) => {
-              console.log(el.point.sections)
-              const text = 'this prints a thing!'
-              if (!this.mapChart.clickLabel) {
-                this.mapChart.clickLabel = this.mapChart.renderer.label(text, 0, 250)
-                  .css({
-                    width: '180px'
-                  })
-                  .add();
-              } else {
-                this.mapChart.clickLabel.attr({
-                  text: text
-                });
+          point: {
+            events: {
+              click: function(el) {
+                location.href = `/${el.point.code}`
               }
             }
           }
@@ -104,15 +90,8 @@ export class UserHome extends Component {
 
     return (
       <div>
-        <p> Your easiest way to see where the biggest news is happening everyday around the world </p>
-        {
-          //   this.props.articles && this.props.articles.length && this.props.articles.map(el => (
-          //   <div key={this.props.articles.indexOf(el)}>
-          //     <h3>{el.section}</h3>
-          //     <p>{el.title}</p>
-          //   </div>
-          // ))
-        }
+        <p className="description"> The easiest way to see where the biggest news is happening everyday around the world. Hover over a country to see how many articles are appearing in the top stories today. Click on the country to see the articles from the New York Times. </p>
+        <div id="mapid"></div>
       </div>
     )
   }

@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Route, Switch } from 'react-router-dom'
-import PropTypes from 'prop-types'
-import { OurMap, UserHome } from './components'
+import { SingleCountry, UserHome } from './components'
 import { fetchArticles, filterData } from './store'
 
 /**
@@ -12,7 +11,6 @@ class Routes extends Component {
   componentWillMount() {
     this.props.loadInitialData()
       .then(articles => {
-        console.log('THESE ARE THE ARTICLEZ', articles)
         this.props.filterArticlesByCountry(articles.articles.results)
       })
   }
@@ -22,7 +20,9 @@ class Routes extends Component {
     return (
       <Switch>
 
+        <Route exact path="/" component={UserHome} />
         <Route path="/home" component={UserHome} />
+        <Route path="/:country" component={SingleCountry} />
 
       </Switch>
     )
