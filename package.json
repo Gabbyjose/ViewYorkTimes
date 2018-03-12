@@ -11,7 +11,7 @@
     "build-client-watch": "webpack -w",
     "deploy": "script/deploy",
     "lint": "eslint ./ --ignore-path .gitignore",
-    "postinstall": "touch secrets.js",
+    "postinstall": "webpack -p",
     "seed": "node script/seed.js",
     "start": "node server",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & npm run start-server",
@@ -48,7 +48,9 @@
     "redux-thunk": "^2.2.0",
     "request": "^2.83.0",
     "sequelize": "^4.3.1",
-    "socket.io": "^2.0.3"
+    "socket.io": "^2.0.3",
+    "webpack": "^4.0.1",
+    "webpack-cli": "^2.0.9"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.40",
@@ -67,13 +69,12 @@
     "eslint-config-fullstack": "^3.0.0",
     "eslint-plugin-react": "^7.4.0",
     "husky": "^0.14.3",
+    "highcharts": "^6.0.7",
     "mocha": "^3.3.0",
     "nodemon": "^1.12.1",
     "react-test-renderer": "^16.0.0",
     "redux-devtools-extension": "^2.13.2",
     "redux-mock-store": "^1.2.3",
-    "supertest": "^3.0.0",
-    "webpack": "^4.0.1",
-    "webpack-cli": "^2.0.9"
+    "supertest": "^3.0.0"
   }
 }
