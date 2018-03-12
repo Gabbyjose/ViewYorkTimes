@@ -17,7 +17,7 @@ export const filterData = articles =>
     for (let i = 0; i < articles.length; i++) {
       for (let j = 0; j < articles[i].geo_facet.length; j++) {
         let country = getCountryCode(articles[i].geo_facet[j])
-        let imageUrl ='https://media.giphy.com/media/H54R9ULqkR5bG/giphy.gif'
+        let imageUrl = 'https://media.giphy.com/media/H54R9ULqkR5bG/giphy.gif'
         if (articles[i].multimedia[2]){
           imageUrl = articles[i].multimedia[2].url
         }
@@ -39,6 +39,8 @@ export const filterData = articles =>
         data.push(currentCountry)
       }
     }
+
+
     dispatch(filterArticles(data))
   }
 
