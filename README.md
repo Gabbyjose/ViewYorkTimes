@@ -8,4 +8,4 @@ The heat map on our main page dynamically updates every day based on what the NY
 
 Please head to our deployed site to see it in action: <http://viewyourtimes.herokuapp.com/>
 
-<!-- ![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Main Page one") -->
+![alt text](https://github.com/Gabbyjose/ViewYorkTimes/blob/master/public/ViewYourTimes1.jpg "Main Page one")
